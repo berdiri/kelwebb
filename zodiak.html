@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Ramalan Zodiak</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fceabb, #f8b500);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input, button {
+            padding: 12px;
+            width: 100%;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input {
+            background-color: #f0f0f0;
+        }
+
+        button {
+            background-color: #f8b500;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d99800;
+        }
+
+        #ramalan {
+            margin-top: 20px;
+            font-size: 17px;
+            color: #444;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .baik {
+            color: green;
+            margin-top: 10px;
+        }
+
+        .buruk {
+            color: red;
+            margin-top: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: scale(0.95);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+        @keyframes slideIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔮 Ramalan Zodiak Berdasarkan Tanggal Lahir 🔮</h1>
+
+        <input type="date" id="tanggalLahir">
+        <button onclick="cekZodiak()">Lihat Ramalan</button>
+
+        <div id="ramalan"></div>
+    </div>
+
+    <script>
+        const ramalanZodiak = {
+            "Aries": {
+                baik: "Energi positif menyertaimu, cocok untuk mulai hal baru.",
+                buruk: "Sikap tergesa bisa menimbulkan kesalahan besar hari ini."
+            },
+            "Taurus": {
+                baik: "Stabilitas finansial mulai terlihat, tetap konsisten.",
+                buruk: "Kekerasan kepala bisa memperburuk konflik kecil."
+            },
+            "Gemini": {
+                baik: "Percakapan hari ini berjalan lancar dan menyenangkan.",
+                buruk: "Terlalu banyak bicara bisa membuat orang salah paham."
+            },
+            "Cancer": {
+                baik: "Intuisi tinggi membantumu membuat keputusan tepat.",
+                buruk: "Suasana hati mudah terganggu, bisa merusak hari."
+            },
+            "Leo": {
+                baik: "Aura karismatikmu memikat orang di sekitarmu.",
+                buruk: "Ego berlebihan bisa menjauhkan orang yang kamu sayang."
+            },
+            "Virgo": {
+                baik: "Waktu ideal untuk menyusun rencana dan tujuan jangka panjang.",
+                buruk: "Perfeksionisme berlebihan bisa bikin kamu stres sendiri."
+            },
+            "Libra": {
+                baik: "Keseimbangan emosi membuatmu damai dan disukai banyak orang.",
+                buruk: "Terlalu ragu-ragu bisa bikin kamu kehilangan kesempatan."
+            },
+            "Scorpio": {
+                baik: "Rahasia akan terbuka, dan itu bisa menguntungkanmu.",
+                buruk: "Curiga berlebihan bisa merusak kepercayaan orang lain."
+            },
+            "Sagitarius": {
+                baik: "Semangatmu membawa petualangan dan peluang baru.",
+                buruk: "Kecerobohan bisa bikin kamu kehilangan sesuatu penting."
+            },
+            "Capricorn": {
+                baik: "Disiplin dan kerja keras mulai membuahkan hasil.",
+                buruk: "Terlalu fokus kerja membuatmu mengabaikan orang terdekat."
+            },
+            "Aquarius": {
+                baik: "Ide kreatifmu bisa jadi solusi untuk banyak hal.",
+                buruk: "Sikap anti-norma bisa bikin kamu disalahpahami."
+            },
+            "Pisces": {
+                baik: "Intuisi kuat membimbingmu ke arah yang tepat.",
+                buruk: "Terlalu larut dalam khayalan bisa bikin kamu lengah."
+            }
+        };
+
+        function getZodiak(d, m) {
+            const zodiakList = [
+                { zodiak: "Capricorn", start: [12, 22], end: [1, 19] },
+                { zodiak: "Aquarius", start: [1, 20], end: [2, 18] },
+                { zodiak: "Pisces", start: [2, 19], end: [3, 20] },
+                { zodiak: "Aries", start: [3, 21], end: [4, 19] },
+                { zodiak: "Taurus", start: [4, 20], end: [5, 20] },
+                { zodiak: "Gemini", start: [5, 21], end: [6, 20] },
+                { zodiak: "Cancer", start: [6, 21], end: [7, 22] },
+                { zodiak: "Leo", start: [7, 23], end: [8, 22] },
+                { zodiak: "Virgo", start: [8, 23], end: [9, 22] },
+                { zodiak: "Libra", start: [9, 23], end: [10, 22] },
+                { zodiak: "Scorpio", start: [10, 23], end: [11, 21] },
+                { zodiak: "Sagitarius", start: [11, 22], end: [12, 21] }
+            ];
+
+            for (let i = 0; i < zodiakList.length; i++) {
+                const z = zodiakList[i];
+                const [startMonth, startDay] = z.start;
+                const [endMonth, endDay] = z.end;
+
+                if (
+                    (m === startMonth && d >= startDay) ||
+                    (m === endMonth && d <= endDay)
+                ) {
+                    return z.zodiak;
+                }
+            }
+
+            return "Tidak Diketahui";
+        }
+
+        function cekZodiak() {
+            const input = document.getElementById("tanggalLahir").value;
+            if (!input) {
+                document.getElementById("ramalan").innerHTML = "⚠️ Masukkan tanggal lahir dulu.";
+                return;
+            }
+
+            const tanggal = new Date(input);
+            const hari = tanggal.getDate();
+            const bulan = tanggal.getMonth() + 1;
+
+            const zodiak = getZodiak(hari, bulan);
+            const hasil = ramalanZodiak[zodiak];
+
+            if (hasil) {
+                document.getElementById("ramalan").innerHTML = `
+                    <strong>♈ Zodiak Kamu: ${zodiak}</strong><br>
+                    <div class="baik">✅ Ramalan Baik: ${hasil.baik}</div>
+                    <div class="buruk">❌ Ramalan Buruk: ${hasil.buruk}</div>
+                `;
+            } else {
+                document.getElementById("ramalan").innerText = "Zodiak tidak ditemukan.";
+            }
+        }
+    </script>
+
+</body>
+</html>
+</html>

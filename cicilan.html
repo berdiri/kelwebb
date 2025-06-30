@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulasi Cicilan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #84fab0, #8fd3f4);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      max-width: 420px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 500;
+      margin-top: 15px;
+      display: block;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #6c63ff;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 8px;
+      background-color: #6c63ff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #5549d5;
+    }
+
+    .result {
+      margin-top: 25px;
+      background-color: #f1f1f1;
+      padding: 15px 20px;
+      border-radius: 10px;
+      color: #2c3e50;
+    }
+
+    .result strong {
+      color: #000;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Simulasi Cicilan</h2>
+
+    <label>Harga Barang (Rp)</label>
+    <input type="number" id="harga" placeholder="Contoh: 5000000">
+
+    <label>Uang Muka / DP (Rp)</label>
+    <input type="number" id="dp" placeholder="Contoh: 1000000">
+
+    <label>Tenor (bulan)</label>
+    <select id="tenor">
+      <option value="3">3 Bulan</option>
+      <option value="6">6 Bulan</option>
+      <option value="12">12 Bulan</option>
+    </select>
+
+    <label>Bunga per Bulan (%)</label>
+    <input type="number" id="bunga" value="1.5">
+
+    <button onclick="hitungCicilan()">Hitung Cicilan</button>
+
+    <div class="result" id="hasil"></div>
+  </div>
+
+  <script>
+    function hitungCicilan() {
+      const harga = parseFloat(document.getElementById('harga').value);
+      const dp = parseFloat(document.getElementById('dp').value);
+      const tenor = parseInt(document.getElementById('tenor').value);
+      const bunga = parseFloat(document.getElementById('bunga').value);
+
+      const hasilEl = document.getElementById('hasil');
+
+      if (isNaN(harga) || isNaN(dp) || isNaN(tenor) || isNaN(bunga) || dp > harga) {
+        hasilEl.innerHTML = "<strong>Isi data dengan benar. DP tidak boleh lebih besar dari harga.</strong>";
+        return;
+      }
+
+      const sisaBayar = harga - dp;
+      const totalBunga = sisaBayar * (bunga / 100) * tenor;
+      const totalBayar = sisaBayar + totalBunga;
+      const cicilanPerBulan = totalBayar / tenor;
+
+      hasilEl.innerHTML = `
+        <strong>Hasil Perhitungan:</strong><br><br>
+        💸 Sisa yang dicicil: Rp ${sisaBayar.toLocaleString()}<br>
+        📈 Total bunga: Rp ${totalBunga.toLocaleString()}<br>
+        💰 Total yang dibayar: Rp ${totalBayar.toLocaleString()}<br>
+        📆 Cicilan per bulan: <strong>Rp ${cicilanPerBulan.toLocaleString()}</strong>
+      `;
+    }
+  </script>
+</body>
+</html>

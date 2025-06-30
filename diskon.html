@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perhitungan Diskon</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #dce35b, #45b649);
+      padding: 40px;
+      color: #333;
+    }
+    .container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    h2 {
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #45b649;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3b9442;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Hitung Diskon</h2>
+    <label for="harga">Harga Barang (Rp):</label>
+    <input type="number" id="harga" placeholder="Contoh: 100000">
+
+    <label for="diskon">Diskon (%):</label>
+    <input type="number" id="diskon" placeholder="Contoh: 10">
+
+    <button onclick="hitungDiskon()">Hitung</button>
+
+    <div class="result" id="hasil"></div>
+  </div>
+
+  <script>
+    function hitungDiskon() {
+      const harga = parseFloat(document.getElementById("harga").value);
+      const diskon = parseFloat(document.getElementById("diskon").value);
+
+      if (isNaN(harga) || isNaN(diskon)) {
+        document.getElementById("hasil").innerText = "Masukkan nilai yang valid!";
+        return;
+      }
+
+      const potongan = (harga * diskon) / 100;
+      const totalBayar = harga - potongan;
+
+      document.getElementById("hasil").innerHTML = `
+        Harga Awal: Rp ${harga.toLocaleString()}<br>
+        Potongan Diskon: Rp ${potongan.toLocaleString()}<br>
+        <strong>Total Bayar: Rp ${totalBayar.toLocaleString()}</strong>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Billing Online Sederhana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, select, button {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    #output {
+      margin-top: 20px;
+      background: #f0f0f0;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Billing Online</h1>
+
+  <label>Nama Pelanggan:</label>
+  <input type="text" id="namaPelanggan" placeholder="Masukkan nama">
+
+  <label>Nama Produk:</label>
+  <input type="text" id="namaProduk" placeholder="Contoh: Kopi">
+
+  <label>Harga Satuan (Rp):</label>
+  <input type="number" id="hargaProduk" placeholder="Contoh: 10000">
+
+  <label>Jumlah:</label>
+  <input type="number" id="jumlahProduk" placeholder="Contoh: 2">
+
+  <button onclick="tambahItem()">Tambah ke Daftar</button>
+
+  <table id="tabelProduk">
+    <thead>
+      <tr>
+        <th>Produk</th>
+        <th>Harga</th>
+        <th>Jumlah</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h3>Total: Rp <span id="totalHarga">0</span></h3>
+  <button onclick="cetakStruk()">Cetak Struk</button>
+
+  <div id="output"></div>
+
+  <script>
+    let total = 0;
+
+    function tambahItem() {
+      const nama = document.getElementById('namaProduk').value;
+      const harga = parseInt(document.getElementById('hargaProduk').value);
+      const jumlah = parseInt(document.getElementById('jumlahProduk').value);
+
+      if (!nama || !harga || !jumlah) {
+        alert('Isi semua kolom produk!');
+        return;
+      }
+
+      const subtotal = harga * jumlah;
+      total += subtotal;
+
+      const tabel = document.querySelector('#tabelProduk tbody');
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${nama}</td><td>Rp ${harga}</td><td>${jumlah}</td><td>Rp ${subtotal}</td>`;
+      tabel.appendChild(row);
+
+      document.getElementById('totalHarga').textContent = total;
+      
+      // Reset input produk
+      document.getElementById('namaProduk').value = '';
+      document.getElementById('hargaProduk').value = '';
+      document.getElementById('jumlahProduk').value = '';
+    }
+
+    function cetakStruk() {
+      const namaPelanggan = document.getElementById('namaPelanggan').value;
+      if (!namaPelanggan) {
+        alert('Isi nama pelanggan!');
+        return;
+      }
+
+      const output = document.getElementById('output');
+      output.innerHTML = `
+        <h3>Struk Pembelian</h3>
+        <p>Nama Pelanggan: <strong>${namaPelanggan}</strong></p>
+        <p>Total Pembayaran: <strong>Rp ${total}</strong></p>
+        <p>Terima kasih telah berbelanja!</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>

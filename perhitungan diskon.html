@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Perhitungan Diskon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f2f2f2;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Program Perhitungan Diskon</h2>
+
+    <label for="harga">Harga Barang (Rp):</label><br>
+    <input type="number" id="harga" placeholder="Masukkan harga barang"><br>
+
+    <label for="diskon">Diskon (%):</label><br>
+    <input type="number" id="diskon" placeholder="Masukkan persen diskon"><br>
+
+    <button onclick="hitungDiskon()">Hitung</button>
+
+    <h3 id="hasil"></h3>
+
+    <script>
+        function hitungDiskon() {
+            let harga = parseFloat(document.getElementById("harga").value);
+            let diskon = parseFloat(document.getElementById("diskon").value);
+
+            if (isNaN(harga) || isNaN(diskon)) {
+                document.getElementById("hasil").innerText = "Masukkan angka yang valid!";
+                return;
+            }
+
+            let jumlahDiskon = (harga * diskon) / 100;
+            let totalBayar = harga - jumlahDiskon;
+
+            document.getElementById("hasil").innerHTML = `
+                Jumlah Diskon: Rp ${jumlahDiskon.toLocaleString()} <br>
+                Total Bayar: Rp ${totalBayar.toLocaleString()}
+            `;
+        }
+    </script>
+</body>
+</html>

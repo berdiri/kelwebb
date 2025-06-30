@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Cek Penerimaan POLRI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 30px;
+    }
+    .container {
+      max-width: 500px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .accepted {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .rejected {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Cek Penerimaan POLRI</h2>
+  <input type="text" id="nama" placeholder="Masukkan Nama">
+  <input type="text" id="nik" placeholder="Masukkan NIK">
+  <select id="jk">
+    <option value="">Pilih Jenis Kelamin</option>
+    <option value="Laki-laki">Laki-laki</option>
+    <option value="Perempuan">Perempuan</option>
+  </select>
+  <input type="number" id="berat" placeholder="Masukkan Berat Badan (kg)">
+  <input type="text" id="pendidikan" placeholder="Masukkan Pendidikan Terakhir">
+  <input type="number" id="usia" placeholder="Masukkan Usia (tahun)">
+  <button onclick="cekStatus()">Cek Status</button>
+  <div id="hasil" class="result"></div>
+</div>
+
+<script>
+  // Data simulasi peserta
+  const dataPendaftar = [
+    {
+      nama: "Andi Saputra",
+      nik: "1234567890",
+      jk: "Laki-laki",
+      berat: 65,
+      pendidikan: "SMA",
+      usia: 19,
+      status: "DITERIMA"
+    },
+    {
+      nama: "Budi Santoso",
+      nik: "9876543210",
+      jk: "Laki-laki",
+      berat: 50,
+      pendidikan: "SMA",
+      usia: 21,
+      status: "TIDAK DITERIMA"
+    },
+    {
+      nama: "Chika Faradila",
+      nik: "1122334455",
+      jk: "Perempuan",
+      berat: 55,
+      pendidikan: "SMK",
+      usia: 18,
+      status: "DITERIMA"
+    }
+  ];
+
+  function cekStatus() {
+    const inputNama = document.getElementById("nama").value.trim().toLowerCase();
+    const inputNIK = document.getElementById("nik").value.trim();
+    const inputJK = document.getElementById("jk").value;
+    const inputBerat = parseInt(document.getElementById("berat").value);
+    const inputPendidikan = document.getElementById("pendidikan").value.trim().toLowerCase();
+    const inputUsia = parseInt(document.getElementById("usia").value);
+    const hasilDiv = document.getElementById("hasil");
+
+    const pendaftar = dataPendaftar.find(p =>
+      p.nama.toLowerCase() === inputNama &&
+      p.nik === inputNIK &&
+      p.jk === inputJK &&
+      p.berat === inputBerat &&
+      p.pendidikan.toLowerCase() === inputPendidikan &&
+      p.usia === inputUsia
+    );
+
+    if (pendaftar) {
+      if (pendaftar.status === "DITERIMA") {
+        hasilDiv.textContent = "Selamat! Anda DITERIMA sebagai anggota POLRI.";
+        hasilDiv.className = "result accepted";
+      } else {
+        hasilDiv.textContent = "Mohon maaf, Anda TIDAK DITERIMA.";
+        hasilDiv.className = "result rejected";
+      }
+    } else {
+      hasilDiv.textContent = "Data tidak ditemukan. Periksa kembali input Anda.";
+      hasilDiv.className = "result rejected";
+    }
+  }
+</script>
+
+</body>
+</html>

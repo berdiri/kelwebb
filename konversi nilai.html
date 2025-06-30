@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Konversi Nilai Angka ke Huruf</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f2f2f2;
+        }
+        h2 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        #hasil {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Program Konversi Nilai</h2>
+
+    <label for="nilai">Masukkan Nilai (0-100):</label><br>
+    <input type="number" id="nilai" min="0" max="100"><br>
+    <button onclick="konversiNilai()">Konversi</button>
+
+    <div id="hasil"></div>
+
+    <script>
+        function konversiNilai() {
+            const nilai = parseInt(document.getElementById("nilai").value);
+            let grade = "";
+
+            if (isNaN(nilai) || nilai < 0 || nilai > 100) {
+                grade = "Nilai tidak valid!";
+            } else if (nilai >= 90) {
+                grade = "A";
+            } else if (nilai >= 80) {
+                grade = "B";
+            } else if (nilai >= 70) {
+                grade = "C";
+            } else if (nilai >= 60) {
+                grade = "D";
+            } else {
+                grade = "E";
+            }
+
+            document.getElementById("hasil").innerText = "Nilai huruf: " + grade;
+        }
+    </script>
+
+</body>
+</html>
